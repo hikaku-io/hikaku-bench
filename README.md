@@ -1,6 +1,6 @@
 # hikaku-bench
 
-Real-world benchmarks for [Hikaku](https://github.com/hikaku-io/hikaku-extension), the browser extension that flags AI-generated images and video.
+Real-world benchmarks for [Hikaku](https://github.com/hikaku-io/hikaku-extension) ([hikaku.io](https://hikaku.io)), the free, open-source browser extension that flags AI-generated images and video.
 
 Instead of a curated research dataset, this tests what people actually run into: images, GIFs and videos from public Reddit communities (collected through [soci.ly](https://soci.ly)). Everything goes through the extension's real detection code: the metadata check, then the screenshot filter, then the visual model.
 
@@ -65,6 +65,10 @@ Some useful variations: `npm run scrape -- --subs=midjourney,EarthPorn`, `npm ru
 
 Sources and weak labels live in [`src/sources.mjs`](src/sources.mjs). If you want to stress the false-positive rate, add hard negatives there (film, 3D renders, product photography).
 
+### Model comparison
+
+The browser comparison downloads pinned candidate weights to `.model-cache/`, serves evaluation media only on localhost, and writes `results/comparison.json` and `results/comparison.md`. It can resume completed items on the same CPU/browser. Limited runs use `--limit=N` with deterministic round-robin sampling by subreddit. Compare coverage, false-positive counts, initialization, warm inference, and error overlap; a smaller model is not necessarily a better replacement. The report includes a separate saved-video pooling experiment and a complementary second-opinion policy. Subreddit labels remain weak. No media or per-item reports are committed.
+
 ## Layout
 
 ```
@@ -73,6 +77,7 @@ src/sources.mjs         subreddits + weak labels
 src/scrape-socily.mjs   renders soci.ly pages, downloads media (HLS video → best ≤720p MP4)
 src/run-images.mjs      images in Node (metadata → screenshot filter → visual model)
 src/run-media.mjs       videos + GIFs through the built extension in Chrome for Testing
+src/compare-models.mjs  browser comparison of candidate models (npm run compare)
 data/                   scraped media + manifest (gitignored, see DATA.md)
 results/                reports (gitignored; publish aggregate tables only)
 ```
@@ -80,5 +85,3 @@ results/                reports (gitignored; publish aggregate tables only)
 ## License
 
 The code is [Apache-2.0](LICENSE). The scraped media is not covered by that license and is never distributed. See [DATA.md](DATA.md).
-
-The browser comparison downloads pinned candidate weights to `.model-cache/`, serves evaluation media only on localhost, and writes `results/comparison.json` and `results/comparison.md`. It can resume completed items on the same CPU/browser. Limited runs use `--limit=N` with deterministic round-robin sampling by subreddit. Compare coverage, false-positive counts, initialization, warm inference, and error overlap; a smaller model is not necessarily a better replacement. The report includes a separate saved-video pooling experiment and a complementary second-opinion policy. Subreddit labels remain weak. No media or per-item reports are committed.
