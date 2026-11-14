@@ -1,0 +1,28 @@
+{
+  "name": "hikaku-bench",
+  "version": "0.1.0",
+  "description": "Tests how well Hikaku flags AI-generated images and video, using real posts from Reddit.",
+  "license": "Apache-2.0",
+  "homepage": "https://hikaku.io",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "scrape": "node src/scrape-socily.mjs",
+    "images": "node src/run-images.mjs",
+    "media": "node src/run-media.mjs",
+    "bench": "npm run images && npm run media",
+    "lint": "eslint ."
+  },
+  "devDependencies": {
+    "@eslint/js": "10.0.1",
+    "eslint": "10.15.0",
+    "globals": "17.14.0",
+    "jpeg-js": "0.4.4",
+    "onnxruntime-web": "1.31.1",
+    "pngjs": "7.0.0",
+    "puppeteer": "25.16.0"
+  }
+}
