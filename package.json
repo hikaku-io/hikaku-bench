@@ -13,6 +13,7 @@
     "scrape": "node src/scrape-socily.mjs",
     "images": "node src/run-images.mjs",
     "media": "node src/run-media.mjs",
+    "compare": "node src/compare-models.mjs",
     "bench": "npm run images && npm run media",
     "lint": "eslint ."
   },

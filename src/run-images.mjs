@@ -1,5 +1,6 @@
 // Runs Hikaku's detection pipeline (metadata, then screenshot filter, then visual
 // model) over the scraped images and compares the results to the weak labels.
+// Node resizing differs from browser canvas. Use npm run compare for browser-native model comparisons.
 //
 // Usage: npm run images -- [--limit=N]
 // Needs: the extension repo with model weights (run npm run setup -- --model=uint8 there)

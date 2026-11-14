@@ -57,6 +57,8 @@ npm install
 npm run scrape -- --per-sub=40        # writes data/manifest.jsonl + data/media/ (gitignored)
 npm run images                        # writes results/images.md
 npm run media                         # writes results/media.md (videos + GIFs, real extension in Chrome)
+npm run compare                       # compare browser/WASM SwinV2, Community Forensics INT8 and FP32
+npm run compare -- --examples=/path/to/images # additional diagnostics, excluded from accuracy metrics
 ```
 
 Some useful variations: `npm run scrape -- --subs=midjourney,EarthPorn`, `npm run images -- --limit=50`, and `EXT_DIR=…/dist/hikaku-x.y.z npm run media`.
@@ -78,3 +80,5 @@ results/                reports (gitignored; publish aggregate tables only)
 ## License
 
 The code is [Apache-2.0](LICENSE). The scraped media is not covered by that license and is never distributed. See [DATA.md](DATA.md).
+
+The browser comparison downloads pinned candidate weights to `.model-cache/`, serves evaluation media only on localhost, and writes `results/comparison.json` and `results/comparison.md`. It can resume completed items on the same CPU/browser. Limited runs use `--limit=N` with deterministic round-robin sampling by subreddit. Compare coverage, false-positive counts, initialization, warm inference, and error overlap; a smaller model is not necessarily a better replacement. The report includes a separate saved-video pooling experiment and a complementary second-opinion policy. Subreddit labels remain weak. No media or per-item reports are committed.
